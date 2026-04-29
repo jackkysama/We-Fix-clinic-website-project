@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register - We Fix Clinic</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      height: 100vh;
+
+      /* SAME BACKGROUND */
+      background: url('images/2.jpeg') no-repeat center/cover;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* DARK OVERLAY */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .register-box {
+      position: relative;
+      z-index: 1;
+
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+
+      padding: 30px;
+      border-radius: 15px;
+      width: 340px;
+      text-align: center;
+
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      color: white;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 95%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 5px;
+      background: #2c5364;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1a3c4a;
+    }
+
+    .back-btn {
+      background: #555;
+    }
+
+    .back-btn:hover {
+      background: #333;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="register-box">
+    <h2>Create Account</h2>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="register()">Register</button>
+    <button class="back-btn" onclick="goLogin()">Back to Login</button>
+  </div>
+<script>
+function register() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  fetch('/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, email, password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert("Registered successfully!");
+      window.location.href = "login.html";
+    } else {
+      alert("Error registering");
+    }
+  });
+}
+</script>
+</body>
+</html>
