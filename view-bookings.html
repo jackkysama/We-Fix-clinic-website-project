@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Bookings</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 30px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .badge {
+      background: #3498db;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .logout {
+      background: #e74c3c;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background: #2c5364;
+    }
+
+    input {
+      padding: 6px;
+      border-radius: 5px;
+      border: none;
+      width: 100%;
+    }
+
+    button {
+      margin: 2px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .edit { background: #3498db; color: white; }
+    .delete { background: #e74c3c; color: white; }
+    .confirm { background: green; color: white; }
+    .cancel { background: orange; color: white; }
+
+    .status {
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .Pending { background: orange; }
+    .Confirmed { background: green; }
+    .Cancelled { background: red; }
+
+  </style>
+</head>
+
+<body>
+
+<div class="top-bar">
+  <div class="badge" id="roleBadge"></div>
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<h1>Manage Bookings</h1>
+
+<table id="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Doctor</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+
+// 🔒 ROLE CHECK
+const role = localStorage.getItem("role");
+
+if (!role) {
+  window.location.href = "login.html";
+}
+
+// 🎯 SHOW ROLE BADGE
+document.getElementById("roleBadge").innerText = "Role: " + role.toUpperCase();
+
+// 🚪 LOGOUT
+function logout() {
+  localStorage.removeItem("role");
+  window.location.href = "login.html";
+}
+
+
+// LOAD BOOKINGS
+function loadBookings() {
+  fetch('/appointments')
+    .then(res => res.json())
+    .then(data => {
+
+      const table = document.querySelector("#table tbody");
+      table.innerHTML = "";
+
+      data.forEach(b => {
+
+        table.innerHTML += `
+        <tr>
+          <td>${b.id}</td>
+
+          <td>
+            ${
+              (role === "admin" || role === "employee")
+              ? `<input value="${b.name}" id="name-${b.id}">`
+              : `${b.name}`
+            }
+          </td>
+
+          <td>
+            ${
+              (role === "admin" || role === "employee")
+              ? `<input value="${b.doctor}" id="doctor-${b.id}">`
+              : `${b.doctor}`
+            }
+          </td>
+
+          <td>
+            ${
+              (role === "admin" || role === "employee")
+              ? `<input type="date" value="${b.date}" id="date-${b.id}">`
+              : `${b.date}`
+            }
+          </td>
+
+          <td>
+            ${
+              (role === "admin" || role === "employee")
+              ? `<input type="time" value="${b.time}" id="time-${b.id}">`
+              : `${b.time}`
+            }
+          </td>
+
+          <td>
+            <span class="status ${b.status}">${b.status}</span>
+          </td>
+
+          <td>
+            ${
+              (role === "admin" || role === "employee")
+              ? `
+                <button class="edit" onclick="update(${b.id})">Edit</button>
+                <button class="delete" onclick="del(${b.id})">Delete</button>
+                <button class="confirm" onclick="setStatus(${b.id}, 'Confirmed')">✔</button>
+                <button class="cancel" onclick="setStatus(${b.id}, 'Cancelled')">✖</button>
+              `
+              : `<span>View Only</span>`
+            }
+          </td>
+
+        </tr>
+        `;
+      });
+
+    });
+}
+
+
+// UPDATE
+function update(id) {
+  const name = document.getElementById(`name-${id}`).value;
+  const doctor = document.getElementById(`doctor-${id}`).value;
+  const date = document.getElementById(`date-${id}`).value;
+  const time = document.getElementById(`time-${id}`).value;
+
+  fetch('/update/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'role': role
+    },
+    body: JSON.stringify({ name, doctor, date, time })
+  })
+  .then(() => {
+    alert("Updated!");
+    loadBookings();
+  });
+}
+
+
+// DELETE
+function del(id) {
+  fetch('/delete/' + id, {
+    method: 'DELETE',
+    headers: {
+      'role': role
+    }
+  })
+  .then(() => loadBookings());
+}
+
+
+// STATUS UPDATE
+function setStatus(id, status) {
+  fetch('/status/' + id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'role': role
+    },
+    body: JSON.stringify({ status })
+  })
+  .then(() => loadBookings());
+}
+
+
+// INIT
+loadBookings();
+
+</script>
+
+</body>
+</html>
