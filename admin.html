@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard - We Fix Clinic</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #020617;
+  color: white;
+}
+
+/* NAVBAR */
+.nav {
+  background: #0f172a;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav h2 {
+  margin: 0;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  background: #1e293b;
+}
+
+.tab {
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #334155;
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+  text-align: center;
+}
+
+/* INPUT */
+input {
+  padding: 6px;
+  background: #020617;
+  border: 1px solid #555;
+  color: white;
+  border-radius: 5px;
+}
+
+/* BUTTONS */
+button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.edit { background: #3498db; }
+.delete { background: #e74c3c; }
+.confirm { background: green; }
+.cancel { background: orange; }
+.add { background: #22c55e; }
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* STATUS COLORS */
+.confirmed { color: lightgreen; }
+.cancelled { color: red; }
+.pending { color: orange; }
+
+/* HIDDEN */
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+  <h2>👑 Admin Dashboard</h2>
+  <a href="index.html">Home</a>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="showTab('bookings')">📋 Bookings</div>
+  <div class="tab" onclick="showTab('doctors')">👨‍⚕️ Doctors</div>
+</div>
+
+<div class="container">
+
+  <!-- BOOKINGS SECTION -->
+  <div id="bookings">
+
+    <div class="card">
+      Total Bookings: <span id="total">0</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTable"></tbody>
+    </table>
+
+  </div>
+
+  <!-- DOCTORS SECTION -->
+  <div id="doctors" class="hidden">
+
+    <div class="card">
+      <h3>Add Doctor</h3>
+      <input id="docName" placeholder="Doctor Name">
+      <input id="docSpecial" placeholder="Specialization">
+      <button class="add" onclick="addDoctor()">Add</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Specialization</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="doctorTable"></tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<script>
+
+/* ROLE CHECK */
+if (localStorage.getItem("role") !== "admin") {
+  alert("Access denied");
+  window.location.href = "login.html";
+}
+
+/* TAB SWITCH */
+function showTab(tab) {
+  document.getElementById("bookings").classList.add("hidden");
+  document.getElementById("doctors").classList.add("hidden");
+
+  document.getElementById(tab).classList.remove("hidden");
+
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+/* ================= BOOKINGS ================= */
+
+async function loadBookings() {
+  const res = await fetch('/appointments');
+  const data = await res.json();
+
+  document.getElementById("total").innerText = data.length;
+
+  const table = document.getElementById("bookingTable");
+  table.innerHTML = "";
+
+  data.forEach(b => {
+
+    let statusClass = "pending";
+    if (b.status === "Confirmed") statusClass = "confirmed";
+    if (b.status === "Cancelled") statusClass = "cancelled";
+
+    table.innerHTML += `
+      <tr>
+        <td>${b.id}</td>
+        <td><input id="name-${b.id}" value="${b.name}"></td>
+        <td><input id="doctor-${b.id}" value="${b.doctor}"></td>
+        <td><input type="date" id="date-${b.id}" value="${b.date}"></td>
+        <td><input type="time" id="time-${b.id}" value="${b.time}"></td>
+        <td class="${statusClass}">${b.status}</td>
+        <td>${b.email || "-"}</td>
+        <td>
+          <button class="edit" onclick="updateBooking(${b.id})">Edit</button>
+          <button class="delete" onclick="deleteBooking(${b.id})">Delete</button><br>
+          <button class="confirm" onclick="setStatus(${b.id}, 'Confirmed')">✔</button>
+          <button class="cancel" onclick="setStatus(${b.id}, 'Cancelled')">✖</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function updateBooking(id) {
+  const name = document.getElementById(`name-${id}`).value;
+  const doctor = document.getElementById(`doctor-${id}`).value;
+  const date = document.getElementById(`date-${id}`).value;
+  const time = document.getElementById(`time-${id}`).value;
+
+  await fetch('/update/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'role': 'admin' },
+    body: JSON.stringify({ name, doctor, date, time })
+  });
+
+  alert("Updated");
+  loadBookings();
+}
+
+async function deleteBooking(id) {
+  if (!confirm("Delete booking?")) return;
+
+  await fetch('/delete/' + id, {
+    method: 'DELETE',
+    headers: { 'role': 'admin' }
+  });
+
+  loadBookings();
+}
+
+async function setStatus(id, status) {
+  await fetch('/status/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'role': 'admin' },
+    body: JSON.stringify({ status })
+  });
+
+  loadBookings();
+}
+
+/* ================= DOCTORS ================= */
+
+async function loadDoctors() {
+  const res = await fetch('/doctors');
+  const data = await res.json();
+
+  const table = document.getElementById("doctorTable");
+  table.innerHTML = "";
+
+  data.forEach(d => {
+    table.innerHTML += `
+      <tr>
+        <td>${d.id}</td>
+        <td><input id="dname-${d.id}" value="${d.name}"></td>
+        <td><input id="dspec-${d.id}" value="${d.specialization}"></td>
+        <td>
+          <button class="edit" onclick="updateDoctor(${d.id})">Edit</button>
+          <button class="delete" onclick="deleteDoctor(${d.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function addDoctor() {
+  const name = document.getElementById("docName").value;
+  const specialization = document.getElementById("docSpecial").value;
+
+  if (!name || !specialization) {
+    alert("Fill all fields");
+    return;
+  }
+
+  await fetch('/doctors/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'role': 'admin' },
+    body: JSON.stringify({ name, specialization })
+  });
+
+  document.getElementById("docName").value = "";
+  document.getElementById("docSpecial").value = "";
+
+  loadDoctors();
+}
+
+async function updateDoctor(id) {
+  const name = document.getElementById(`dname-${id}`).value;
+  const specialization = document.getElementById(`dspec-${id}`).value;
+
+  await fetch('/doctors/update/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'role': 'admin' },
+    body: JSON.stringify({ name, specialization })
+  });
+
+  alert("Doctor updated");
+  loadDoctors();
+}
+
+async function deleteDoctor(id) {
+  if (!confirm("Delete doctor?")) return;
+
+  await fetch('/doctors/delete/' + id, {
+    method: 'DELETE',
+    headers: { 'role': 'admin' }
+  });
+
+  loadDoctors();
+}
+
+/* INIT */
+loadBookings();
+loadDoctors();
+
+</script>
+
+</body>
+</html>
