@@ -28,8 +28,7 @@ This is a fully functional website for We Fix Clinic, including homepage, doctor
 
 ## Staff
 
-- **Doctors (5)**: Dr. John Smith, Dr. Emily Johnson, Dr. Michael Williams, Dr. Sarah Brown, Dr. David Lee (with professional images)
-- **Receptionist (1)**: Jane Doe (with image)
+- **Doctors (5)**: Dr. Kumar Khadka, Dr. Sunil Giraula, Dr. Amrit Lamichanne, Dr. Sangit Buniya, Dr. Sushila Sherpa (with professional images)
 
 ## Usage
 
