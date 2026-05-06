@@ -1,147 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Book Appointment - We Fix Clinic</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      height: 100vh;
-
-      background: url('images/3.jpeg') no-repeat center/cover;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* DARK OVERLAY */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      top: 0;
-      left: 0;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-
-      padding: 30px;
-      border-radius: 15px;
-      width: 350px;
-      text-align: center;
-
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      color: white;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    input, select {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-
-    button {
-      width: 95%;
-      padding: 10px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 5px;
-      background: #2c5364;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #1a3c4a;
-    }
-
-    .top-bar {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      z-index: 2;
-    }
-
-    .top-bar a {
-      color: white;
-      margin-left: 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - We Fix Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>We Fix Clinic</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#doctors-section">Doctors</a></li>
+                <li><a href="booking.html">Book Appointment</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="top-bar">
-  <a href="dashboard.html">Dashboard</a>
-  <a href="index.html">Home</a>
-</div>
+    <section class="booking-section">
+        <div class="booking-container">
+            <h2>Book an Appointment</h2>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" required placeholder="+1 (123) 456-7890">
+                </div>
+                <div class="form-group">
+                    <label for="doctor">Select Doctor:</label>
+                    <select id="doctor" required>
+                        <option value="">Choose a Doctor</option>
+                    </select>
+                    <p id="availabilityMessage" style="margin-top: 10px; color: #555; font-size: 0.95rem;"></p>
+                </div>
+                <div class="form-group">
+                    <label for="date">Preferred Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Preferred Time:</label>
+                    <select id="time" required>
+                        <option value="">Select Time</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason for Visit:</label>
+                    <textarea id="reason" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-large">Book Appointment</button>
+            </form>
+            <div id="bookingMessage"></div>
+            <div id="bookingConfirmationCard" class="booking-confirmation-card" style="display: none;"></div>
+        </div>
+    </section>
 
-<div class="container">
-  <h2>Book Appointment</h2>
+    <footer>
+        <p>&copy; 2023 We Fix Clinic. All rights reserved.</p>
+        <p>Contact: info@wefixclinic.com | Phone: (123) 456-7890</p>
+    </footer>
 
-  <input type="text" id="name" placeholder="Your Name">
-
-  <select id="doctor">
-    <option>Dr. Ghiraula</option>
-    <option>Dr. Buniya</option>
-    <option>Dr. Kumar</option>
-    <option>Dr. Amrit</option>
-  </select>
-
-  <input type="date" id="date">
-  <input type="time" id="time">
-
-  <button onclick="book()">Book Now</button>
-</div>
-
-<script>
-
-function book() {
-  const name = document.getElementById("name").value;
-  const doctor = document.getElementById("doctor").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-
-  fetch('/book', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ name, doctor, date, time })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Appointment booked!");
-      window.location.href = "view-bookings.html";
-    } else {
-      alert("Booking failed");
-    }
-  });
-}
-
-</script>
-
+    <!-- Boka AI Chatbot Button -->
+    <button id="chatbot-button">💬</button>
+    <script src="js/api.js?v=3"></script>
+    <script src="js/script.js?v=4"></script>
 </body>
 </html>
