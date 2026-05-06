@@ -1,172 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>We Fix Clinic - Login</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      height: 100vh;
-
-      /* 🔥 YOUR IMAGE HERE */
-      background: url('images/1.jpeg') no-repeat center/cover;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* DARK OVERLAY */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
-
-    .login-box {
-      position: relative;
-      z-index: 1;
-
-      /* 🔥 GLASS EFFECT */
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-
-      padding: 30px;
-      border-radius: 15px;
-      width: 320px;
-      text-align: center;
-
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      color: white;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-
-    button {
-      width: 95%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 5px;
-      background: #2c5364;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #1a3c4a;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - We Fix Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>We Fix Clinic</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#doctors-section">Doctors</a></li>
+                <li><a href="booking.html">Book Appointment</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="login-box">
-    <h2>We Fix Clinic</h2>
+    <section class="login-section">
+        <div class="login-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="employee">Employee</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-large">Login</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </section>
 
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
+    <footer>
+        <p>&copy; 2023 We Fix Clinic. All rights reserved.</p>
+        <p>Contact: info@wefixclinic.com | Phone: (123) 456-7890</p>
+    </footer>
 
-    <button onclick="login()">Patient Login</button>
-    <button onclick="employeeLogin()">Employee Login</button>
-    <button onclick="goRegister()">Register (Patient)</button>
-  </div>
-<script>
-function employeeLogin() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  fetch('/employee-login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-
-      localStorage.setItem("role", data.role);
-
-      if (data.role === "admin") {
-        window.location.href = "admin.html";
-      } else {
-        window.location.href = "employee.html";
-      }
-
-    } else {
-      alert("Invalid employee login");
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Server error");
-  });
-}
-</script>
-<script>
-function goRegister() {
-  window.location.href = "test.html";
-}
-</script>
-<script>
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  fetch('/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-
-    if (data.success) {
-
-      // ✅ SAVE ROLE
-      localStorage.setItem("role", data.role);
-
-      // ✅ REDIRECT BASED ON ROLE
-      if (data.role === "admin") {
-        window.location.href = "admin.html";
-      } 
-      else if (data.role === "employee") {
-        window.location.href = "employee.html";
-      } 
-      else {
-        window.location.href = "dashboard.html";
-      }
-
-    } else {
-      alert("Invalid login");
-    }
-
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Server error");
-  });
-}
-</script>
-
+    <!-- Boka AI Chatbot Button -->
+    <button id="chatbot-button">💬</button>
+    <script src="js/api.js?v=3"></script>
+    <script src="js/script.js?v=4"></script>
 </body>
 </html>
