@@ -1,436 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>We Fix Clinic</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-    }
-
-    /* NAVBAR */
-    nav {
-      background: #0f2027;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
-    }
-
-    /* HERO IMAGE */
-    .hero {
-      height: 60vh;
-      background: url('images/image001.jpeg') no-repeat center/cover;
-    }
-
-    /* TOP TEXT SECTION */
-    .top-text {
-      background: #f4f4f4;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .top-text h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-
-    .top-text p {
-      font-size: 18px;
-      color: #555;
-    }
-
-    /* SECTION */
-    .section {
-      padding: 50px;
-      text-align: center;
-    }
-
-    .cards {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      width: 250px;
-      margin: 10px;
-      padding: 20px;
-      background: #f4f4f4;
-      border-radius: 10px;
-    }
-
-    footer {
-      background: #0f2027;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .card img {
-  margin-bottom: 10px;
-}
-
-.card {
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  background: #e8f0f2;
-}
-.section h2 {
-  margin-bottom: 20px;
-}
-
-.card h3 {
-  color: #2c5364;
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Fix Clinic - Quality Healthcare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>We Fix Clinic</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#doctors-section">Doctors</a></li>
+                <li><a href="booking.html">Book Appointment</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<!-- NAVBAR -->
-<nav>
-  <h2>We Fix Clinic</h2>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="login.html">Login</a>
-    <a href="test.html">Register</a>
-    <a href="booking.html">Book</a>
-  </div>
-</nav>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>We Fix Clinic</h1>
+            <h2>Your Health, Our Priority</h2>
+            <p>Experience compassionate care with our expert medical team. From routine check-ups to specialized treatments, we're here for you 24/7.</p>
+            <div class="hero-buttons">
+                <a href="tel:+1234567890" class="btn primary">Call Us Now: (123) 456-7890</a>
+                <a href="#doctors-section" class="btn secondary">Meet Our Doctors</a>
+            </div>
+        </div>
+    </section>
 
-<!-- HERO IMAGE (NO BUTTONS NOW) -->
-<div class="hero"></div>
+    <section class="services">
+        <h2>Our Services</h2>
+        <div class="service-list">
+            <div class="service">
+                <h3>General Medicine</h3>
+                <p>Comprehensive primary care for all ages.</p>
+            </div>
+            <div class="service">
+                <h3>Specialist Consultations</h3>
+                <p>Expert advice from our specialist doctors.</p>
+            </div>
+            <div class="service">
+                <h3>Emergency Care</h3>
+                <p>24/7 emergency services for urgent needs.</p>
+            </div>
+        </div>
+    </section>
 
-<!-- TEXT MOVED TO TOP SECTION -->
-<div class="top-text">
-  <h1>Your Health, Our Priority</h1>
-  <p>Book appointments easily and get the best care from our experienced doctors.</p>
-</div>
+    <section class="stats">
+        <h2>Why Choose We Fix Clinic?</h2>
+        <div class="stats-grid">
+            <div class="stat">
+                <h3>20+</h3>
+                <p>Years of Experience</p>
+            </div>
+            <div class="stat">
+                <h3>5000+</h3>
+                <p>Happy Patients</p>
+            </div>
+            <div class="stat">
+                <h3>5</h3>
+                <p>Expert Doctors</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Emergency Care</p>
+            </div>
+        </div>
+    </section>
 
-<!-- ABOUT -->
-<div class="section">
-  <h2>About Us</h2>
-  <p>We Fix Clinic provides high-quality healthcare services with experienced professionals.</p>
-</div>
-
-<div class="section">
-  <h2>Our Services</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>General Checkup</h3>
-      <p>Routine health examinations and diagnosis.</p>
-    </div>
-
-    <div class="card">
-      <h3>Dental Care</h3>
-      <p>Complete dental treatments and oral care.</p>
-    </div>
-
-    <div class="card">
-      <h3>Patient Transport Service</h3>
-      <p>Transportation services for patient.</p>
-    </div>
-
-    <div class="card">
-      <h3>Blood Testing</h3>
-      <p>Accurate lab tests with quick results.</p>
-    </div>
-
-    <div class="card">
-      <h3>Vaccination</h3>
-      <p>Safe and reliable immunization services.</p>
-    </div>
-
-  </div>
-</div>
-
-<div class="section">
-  <h2>Our Team</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <img src=images/doctor1.jpeg width="100" style="border-radius:50%;">
-      <h3>Dr. Sunil Ghiraula</h3>
-      <p><b>Specialist:</b> General Physician</p>
-      <p><b>Experience:</b> 10+ Years</p>
-      <p>Email: Ghiraula@clinic.com</p>
-      <p>Phone: 0400 111 222</p>
-      <p>Available: Mon-Fri (9AM - 5PM)</p>
-    </div>
-
-    <div class="card">
-      <img src=images/doctor3.jpeg width="100" style="border-radius:50%;">
-      <h3>Dr. Kumar Khadka</h3>
-      <p><b>Specialist:</b> Dentist</p>
-      <p><b>Experience:</b> 8+ Years</p>
-      <p>Email: khadka@clinic.com</p>
-      <p>Phone: 0400 222 333</p>
-      <p>Available: Tue-Sat (10AM - 6PM)</p>
-    </div>
-
-    <div class="card">
-      <img src=images/doctor2.jpeg width="100" style="border-radius:50%;">
-      <h3>Dr. Sangit Buniya</h3>
-      <p><b>Specialist:</b> General Medicine</p>
-      <p><b>Experience:</b> 12+ Years</p>
-      <p>Email: buniya@clinic.com</p>
-      <p>Phone: 0400 333 444</p>
-      <p>Available: Thu-Sun (9AM - 4PM)</p>
-    </div>
-
-    <div class="card">
-      <img src=images/doctor4.jpeg width="100" style="border-radius:50%;">
-      <h3>Dr. Amrit Lamichhane</h3>
-      <p><b>Specialist:</b> Gynecologist</p>
-      <p><b>Experience:</b> 15+ Years</p>
-      <p>Email: lamichhane@clinic.com</p>
-      <p>Phone: 0400 444 555</p>
-      <p>Available: Wed-Sun (11AM - 4PM)</p>
-    </div>
-
-    <div class="card">
-      <img src=images/recption1.jpeg width="100" style="border-radius:50%;">
-      <h3>Receptionist - Sushila Sherpa</h3>
-      <p><b>Role:</b> Front Desk & Appointments</p>
-      <p><b>Experience:</b> 5 Years</p>
-      <p>Email: sushila@clinic.com</p>
-      <p>Phone: 0400 555 666</p>
-      <p>Available: Mon-Fri (9AM - 6PM)</p>
-    </div>
-
-  </div>
-</div>
-<div class="section" style="background:#f9f9f9;">
-  <h2>Opening Hours</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>Weekdays</h3>
-      <p>Monday - Friday</p>
-      <p><b>9:00 AM – 6:00 PM</b></p>
-    </div>
-
-    <div class="card">
-      <h3>Saturday</h3>
-      <p><b>10:00 AM – 4:00 PM</b></p>
-    </div>
-
-    <div class="card">
-      <h3>Sunday</h3>
-      <p><b>10:00 AM – 3:00 PM</b></p>
-    </div>
-    </div>
-
-  </div>
-</div>
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 We Fix Clinic | All Rights Reserved</p>
-</footer>
-<!-- CHATBOT BUTTON -->
-<div id="chatbot-btn" onclick="toggleChat()">💬</div>
-
-<!-- CHATBOX -->
-<div id="chatbot-box">
-  <div id="chat-header">
-    Boka 🤖
-    <span onclick="toggleChat()">✖</span>
-  </div>
-
-  <div id="chat-body">
-    <div class="bot-msg">Hi! I'm Boka 🤖 How can I help?</div>
-  </div>
-
-  <!-- QUICK OPTIONS -->
-  <div id="quick-options">
-    <button onclick="quickReply('book')">Book Appointment</button>
-    <button onclick="quickReply('doctor')">Doctors</button>
-    <button onclick="quickReply('time')">Opening Hours</button>
-  </div>
-
-  <div id="chat-input">
-    <input type="text" id="userInput" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-</div>
-
-<style>
-#chatbot-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #2c5364;
-  color: white;
-  padding: 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 20px;
-}
-
-#chatbot-box {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 320px;
-  background: white;
-  border-radius: 10px;
-  display: none;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  overflow: hidden;
-}
-
-#chat-header {
-  background: #2c5364;
-  color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-#chat-body {
-  height: 220px;
-  overflow-y: auto;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.bot-msg {
-  background: #eee;
-  padding: 8px;
-  margin: 5px;
-  border-radius: 8px;
-  max-width: 80%;
-}
-
-.user-msg {
-  background: #2c5364;
-  color: white;
-  padding: 8px;
-  margin: 5px;
-  border-radius: 8px;
-  max-width: 80%;
-  margin-left: auto;
-}
-
-#quick-options {
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-#quick-options button {
-  flex: 1;
-  padding: 6px;
-  border: none;
-  background: #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#chat-input {
-  display: flex;
-  border-top: 1px solid #ccc;
-}
-
-#chat-input input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-}
-
-#chat-input button {
-  padding: 10px;
-  background: #2c5364;
-  color: white;
-  border: none;
-}
-</style>
-
-<script>
-function toggleChat() {
-  const box = document.getElementById("chatbot-box");
-  box.style.display = box.style.display === "none" ? "block" : "none";
-}
-
-function addMessage(text, type) {
-  const chatBody = document.getElementById("chat-body");
-  const msg = document.createElement("div");
-  msg.className = type === "user" ? "user-msg" : "bot-msg";
-  msg.innerText = text;
-  chatBody.appendChild(msg);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function getBotReply(message) {
-  message = message.toLowerCase();
-
-  if (message.includes("book")) {
-    setTimeout(() => {
-      window.location.href = "booking.html";
-    }, 1500);
-    return "Redirecting you to booking page...";
-  }
-
-  if (message.includes("doctor")) {
-    return "We have expert doctors available daily including general and dental specialists.";
-  }
-
-  if (message.includes("time") || message.includes("open")) {
-    return "We are open from 9 AM to 6 PM, Monday to Saturday.";
-  }
-
-  if (message.includes("hello") || message.includes("hi")) {
-    return "Hello! How can I assist you today?";
-  }
-
-  if (message.includes("help")) {
-    return "You can ask about booking, doctors, or clinic hours.";
-  }
-
-  return "Sorry, I didn't understand. Try asking about booking or doctors.";
-}
-
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const message = input.value;
-
-  if (!message) return;
-
-  addMessage(message, "user");
-
-  setTimeout(() => {
-    const reply = getBotReply(message);
-    addMessage(reply, "bot");
-  }, 500);
-
-  input.value = "";
-}
-
-function quickReply(text) {
-  addMessage(text, "user");
-
-  setTimeout(() => {
-    const reply = getBotReply(text);
-    addMessage(reply, "bot");
-  }, 500);
-}
-</script>
+    <section class="about">
+        <h2>About Us</h2>
+        <p>Health Clinic has been serving the community for over 20 years, providing quality healthcare with a focus on patient-centered care. Our team of experienced doctors and staff are dedicated to your well-being.</p>
+    </section>
+    <section class="doctors-section" id="doctors-section">
+        <h2>Our Doctors</h2>
+        <div class="doctors-list" id="doctorsList">
+            <p>Loading doctors...</p>
+        </div>
+    </section>
+    <section class="testimonials">
+        <h2>What Our Patients Say</h2>
+        <div class="testimonial-list">
+            <div class="testimonial">
+                <p>"Excellent care and professional staff. Dr. Smith is amazing!"</p>
+                <cite>- Sarah Johnson</cite>
+            </div>
+            <div class="testimonial">
+                <p>"We Fix Clinic has been our family doctor for years. Highly recommended."</p>
+                <cite>- Michael Brown</cite>
+            </div>
+            <div class="testimonial">
+                <p>"Quick appointments and friendly service. Great experience overall."</p>
+                <cite>- Emily Davis</cite>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 We Fix Clinic. All rights reserved.</p>
+        <p>Contact: info@wefixclinic.com | Phone: (123) 456-7890</p>
+    </footer>
+    <!-- Boka AI Chatbot Button -->
+    <button id="chatbot-button">💬</button>
+    <script src="js/api.js?v=4"></script>
+    <script src="js/script.js?v=4"></script>
 </body>
 </html>
